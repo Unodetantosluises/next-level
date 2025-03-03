@@ -1,9 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ToolbarComponent } from '@components/toolbar/toolbar.component';
 import { MatCardModule } from '@angular/material/card'
+import { ModalService } from '@components/modal/modal.service';
+import { ModalComponent } from '@components/modal/modal.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 
-const MATERIAL_MODULES = [MatCardModule]
+const MATERIAL_MODULES = [MatCardModule, MatProgressSpinnerModule]
 
 @Component({
   selector: 'app-root',
@@ -13,9 +16,11 @@ const MATERIAL_MODULES = [MatCardModule]
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'contact';
+  title = 'Next Level';
+
+  private readonly _modalSvc = inject(ModalService);
 
   onClickNeContat(): void{
-    console.log("Funciona")
+    this._modalSvc.openModal<ModalComponent>(ModalComponent);
   }
 }

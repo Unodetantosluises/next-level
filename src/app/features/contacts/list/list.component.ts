@@ -1,8 +1,9 @@
-import { Component, inject } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { GridComponent } from '@components/grid/grid.component';
 import { Autor, ColumnKeys } from '@features/contacts/autor.interfaces';
 import { AutorService } from '../autor.service';
 import { tap } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-list',
@@ -10,25 +11,30 @@ import { tap } from 'rxjs';
   imports: [GridComponent],
   template: `
     <section>
-      @if(data) {
-        <app-grid [displayedColumns]="displayedColumns" [data]="data" [sortableColumns]="sortables" />
-      }
+        <app-grid [displayedColumns]="displayedColumns" [data]="autors()" [sortableColumns]="sortables" />
     </section>
   `,
   styles: ``
 })
 
-export class ListComponent {
-  data!: Autor[];
-  displayedColumns:ColumnKeys<Autor> = ['id', 'nombre', 'descripcion', 'created', 'updated', 'action'];
-  sortables:ColumnKeys<Autor> = ['id', 'nombre', 'descripcion', 'created', 'updated'];
+export class ListComponent implements OnInit {
+  autors = signal<Autor[]>([]);
 
-  private readonly _autorSvc = inject(AutorService)
+  displayedColumns:ColumnKeys<Autor> = ['id', 'nombre', 'descripcion', 'action'];
+  sortables:ColumnKeys<Autor> = ['id', 'nombre', 'descripcion'];
+
+  private readonly _autorSvc = inject(AutorService);
+  private readonly _destroyRef = inject(DestroyRef);
+
+  ngOnInit(): void {
+    this.getAllAutors();
+  }
 
   getAllAutors() {
     this._autorSvc.getAllAutors()
     .pipe(
-      tap((autors: Autor[]) => this.data = [...autors])
+      takeUntilDestroyed(this._destroyRef),
+      tap((autors: Autor[]) => this.autors.set(autors))
     )
     .subscribe()
   }

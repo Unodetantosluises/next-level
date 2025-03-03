@@ -6,7 +6,7 @@ export interface Autor {
   id: string;
   nombre: string;
   descripcion: string;
-  action: string;
   created: Timestamp;
   updated: Timestamp;
+  action: string;
 }
