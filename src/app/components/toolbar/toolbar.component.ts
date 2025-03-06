@@ -19,7 +19,7 @@ const MATERIAL_MODULES = [MatIconModule,MatToolbarModule, MatButtonModule];
 
       <a mat-button routerLink="/contacts">
         <mat-icon>list_alt</mat-icon>
-          <span>Contacts</span>
+          <span>Autores</span>
       </a>
 
       <span class="spacer"></span>

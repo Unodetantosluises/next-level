@@ -1,7 +1,7 @@
 <div mat-dialog-title>
   <h1>Autor Form</h1>
 </div>
-<form [formGroup]="autorForm">
+<form [formGroup]="autorForm" (ngSubmit)="onSubmit()">
   <div mat-dialog-content class="content">
     <div class="row">
       <mat-form-field class="full-width" appearance="outline">
