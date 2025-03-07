@@ -23,7 +23,7 @@ import { Observable } from "rxjs";
       return collectionData(queryFn, {idField: 'id'}) as Observable<Autor[]>
     }
 
-    async getAutorByIs(id:string): Promise<Autor> {
+    async getAutorById(id:string): Promise<Autor> {
       const docRef = this._getDocRef(id);
       const documentData = await getDoc(docRef);
       return documentData.data() as Autor;

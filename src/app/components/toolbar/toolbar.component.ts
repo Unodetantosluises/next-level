@@ -22,6 +22,11 @@ const MATERIAL_MODULES = [MatIconModule,MatToolbarModule, MatButtonModule];
           <span>Autores</span>
       </a>
 
+      <a mat-button routerLink="/noticias">
+        <mat-icon>picture_in_picture</mat-icon>
+          <span>Noticias</span>
+      </a>
+
       <span class="spacer"></span>
 
       <a mat-button (click)="emitClick()">
